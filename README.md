@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { Github, Linkedin, Instagram, Mail, MapPin, Clock, Code, Star, GitFork, Users, Activity, Zap, Award, Target, Flame, TrendingUp, Terminal, Cpu, Database, Server, Globe, GitCommit, GitBranch, GitPullRequest } from 'lucide-react';
+import { Github, Linkedin, Instagram, Mail, MapPin, Clock, Code, Star, GitFork, Users, Activity, Zap, Award, Target, Flame, TrendingUp, Terminal, Cpu, Database, Server, Globe, GitCommit, GitBranch, GitPullRequest, Calendar, BookOpen, Rocket } from 'lucide-react';
 
 const GitHubDashboard = () => {
   const [terminalLines, setTerminalLines] = useState([]);
   const [currentCommand, setCurrentCommand] = useState('');
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [commitData, setCommitData] = useState(null);
+  const [repoData, setRepoData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [currentTime, setCurrentTime] = useState(new Date());
 
   const commands = [
     '$ git status',
@@ -14,17 +16,17 @@ const GitHubDashboard = () => {
     '  Your branch is up to date',
     '',
     '$ git log --oneline -5',
-    '  a3f82b1 feat: Add new dashboard features',
-    '  c9d45e3 fix: Resolve responsive issues',
-    '  7b2e8f1 docs: Update README',
-    '  5a1c3d9 refactor: Optimize performance',
-    '  2f8e6b4 style: Improve UI components',
+    '  a3f82b1 feat: Enhanced dashboard with animations',
+    '  c9d45e3 fix: Optimized API calls',
+    '  7b2e8f1 docs: Updated documentation',
+    '  5a1c3d9 refactor: Improved performance',
+    '  2f8e6b4 style: Modern UI components',
     '',
-    '$ npm run build',
-    '  Building production bundle...',
-    '  ✓ Compiled successfully',
+    '$ npm run dev',
+    '  ⚡️ Vite dev server running...',
+    '  ✓ Ready in 342ms',
     '',
-    '$ git commit -m "Building the future, one commit at a time"',
+    '$ echo "Building the future, one commit at a time"',
   ];
 
   useEffect(() => {
@@ -48,7 +50,7 @@ const GitHubDashboard = () => {
       } else {
         clearInterval(typeInterval);
       }
-    }, 30);
+    }, 25);
 
     return () => clearInterval(typeInterval);
   }, []);
@@ -59,13 +61,24 @@ const GitHubDashboard = () => {
     return () => window.removeEventListener('mousemove', handleMouse);
   }, []);
 
-  // Fetch real GitHub data
+  useEffect(() => {
+    const timer = setInterval(() => setCurrentTime(new Date()), 1000);
+    return () => clearInterval(timer);
+  }, []);
+
   useEffect(() => {
     const fetchGitHubData = async () => {
       try {
-        const response = await fetch('https://api.github.com/users/PiyushBytes');
-        const data = await response.json();
-        setCommitData(data);
+        const [userResponse, reposResponse] = await Promise.all([
+          fetch('https://api.github.com/users/PiyushBytes'),
+          fetch('https://api.github.com/users/PiyushBytes/repos?sort=updated&per_page=6')
+        ]);
+        
+        const userData = await userResponse.json();
+        const reposData = await reposResponse.json();
+        
+        setCommitData(userData);
+        setRepoData(reposData);
         setLoading(false);
       } catch (error) {
         console.error('Error fetching GitHub data:', error);
@@ -74,7 +87,6 @@ const GitHubDashboard = () => {
     };
 
     fetchGitHubData();
-    // Refresh every 5 minutes
     const interval = setInterval(fetchGitHubData, 300000);
     return () => clearInterval(interval);
   }, []);
@@ -148,8 +160,8 @@ const GitHubDashboard = () => {
 
   const techStack = [
     { name: 'JavaScript', percentage: 51.08, color: 'bg-yellow-500', gradient: 'from-yellow-400 to-yellow-600', icon: '⚡' },
-    { name: 'HTML', percentage: 10.66, color: 'bg-orange-500', gradient: 'from-orange-400 to-red-500', icon: '🌐' },
     { name: 'CSS', percentage: 38.26, color: 'bg-blue-500', gradient: 'from-blue-400 to-purple-500', icon: '🎨' },
+    { name: 'HTML', percentage: 10.66, color: 'bg-orange-500', gradient: 'from-orange-400 to-red-500', icon: '🌐' },
   ];
 
   const socialLinks = [
@@ -190,12 +202,10 @@ const GitHubDashboard = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-950 via-black to-gray-950 text-white overflow-x-hidden relative">
-      {/* Animated Matrix Background */}
       <div className="fixed inset-0 pointer-events-none opacity-5">
         <div className="absolute inset-0 bg-[linear-gradient(transparent_0%,transparent_90%,#0f0_90%,#0f0_100%)] bg-[length:100px_100px] animate-[matrix_20s_linear_infinite]" />
       </div>
 
-      {/* Grid Pattern */}
       <div className="fixed inset-0 pointer-events-none opacity-10">
         <div className="absolute inset-0" style={{
           backgroundImage: 'linear-gradient(rgba(139, 92, 246, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(139, 92, 246, 0.1) 1px, transparent 1px)',
@@ -203,7 +213,6 @@ const GitHubDashboard = () => {
         }} />
       </div>
 
-      {/* Mouse Glow */}
       <div 
         className="fixed w-96 h-96 rounded-full pointer-events-none blur-3xl opacity-20 transition-all duration-300"
         style={{
@@ -214,11 +223,9 @@ const GitHubDashboard = () => {
       />
 
       <div className="max-w-7xl mx-auto p-6 relative z-10">
-        {/* Hero Section */}
         <div className="mb-8">
           <div className="bg-gradient-to-br from-gray-900/80 via-purple-900/20 to-gray-900/80 backdrop-blur-xl border border-purple-500/20 rounded-3xl p-8 shadow-2xl">
             <div className="flex flex-col md:flex-row items-center md:items-start gap-8 mb-8">
-              {/* Profile Image */}
               <div className="relative group">
                 <div className="absolute -inset-1 bg-gradient-to-r from-purple-600 via-pink-600 to-cyan-600 rounded-full blur-lg opacity-75 group-hover:opacity-100 transition-opacity" />
                 <img 
@@ -231,7 +238,6 @@ const GitHubDashboard = () => {
                 </div>
               </div>
 
-              {/* Profile Info */}
               <div className="flex-1 text-center md:text-left">
                 <div className="flex items-center justify-center md:justify-start gap-3 mb-2">
                   <h1 className="text-5xl font-black bg-gradient-to-r from-purple-400 via-pink-400 to-cyan-400 bg-clip-text text-transparent">
@@ -258,7 +264,7 @@ const GitHubDashboard = () => {
                   </div>
                   <div className="flex items-center gap-2 bg-gray-800/50 px-3 py-2 rounded-lg backdrop-blur-sm">
                     <Clock className="w-4 h-4 text-cyan-400" />
-                    <span>15:46 UTC +5:30</span>
+                    <span>{currentTime.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })} UTC +5:30</span>
                   </div>
                   <div className="flex items-center gap-2 bg-green-500/20 border border-green-500/30 px-3 py-2 rounded-lg backdrop-blur-sm">
                     <Zap className="w-4 h-4 text-green-400" />
@@ -268,7 +274,6 @@ const GitHubDashboard = () => {
               </div>
             </div>
 
-            {/* Terminal Window */}
             <div className="bg-gray-950 border border-gray-800 rounded-xl overflow-hidden shadow-2xl">
               <div className="flex items-center gap-2 px-4 py-3 bg-gray-900 border-b border-gray-800">
                 <div className="flex gap-2">
@@ -283,7 +288,7 @@ const GitHubDashboard = () => {
               </div>
               <div className="p-4 font-mono text-sm h-64 overflow-y-auto">
                 {terminalLines.map((line, index) => (
-                  <div key={index} className={`${line.startsWith('$') ? 'text-green-400' : line.startsWith('  ✓') ? 'text-emerald-400' : line.startsWith('  On') || line.startsWith('  Your') ? 'text-blue-400' : 'text-gray-400'} mb-1`}>
+                  <div key={index} className={`${line.startsWith('$') ? 'text-green-400' : line.startsWith('  ✓') || line.startsWith('  ⚡') ? 'text-emerald-400' : line.startsWith('  On') || line.startsWith('  Your') ? 'text-blue-400' : 'text-gray-400'} mb-1`}>
                     {line}
                   </div>
                 ))}
@@ -295,7 +300,6 @@ const GitHubDashboard = () => {
               </div>
             </div>
 
-            {/* Social Links */}
             <div className="mt-6 pt-6 border-t border-gray-700/50">
               <div className="grid grid-cols-2 md:flex gap-3">
                 {socialLinks.map((social, index) => (
@@ -320,7 +324,6 @@ const GitHubDashboard = () => {
           </div>
         </div>
 
-        {/* Real-time Stats */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           {stats.map((stat, index) => (
             <div 
@@ -350,7 +353,6 @@ const GitHubDashboard = () => {
           ))}
         </div>
 
-        {/* Live Dashboard Stats */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
           {liveStats.map((stat, index) => (
             <div 
@@ -373,9 +375,7 @@ const GitHubDashboard = () => {
           ))}
         </div>
 
-        {/* Contribution Graph & Languages */}
         <div className="grid md:grid-cols-3 gap-6 mb-8">
-          {/* Contribution Graph */}
           <div className="md:col-span-2 bg-gradient-to-br from-gray-900/90 to-gray-800/90 backdrop-blur-xl border border-purple-500/20 rounded-2xl p-6 shadow-2xl">
             <div className="flex items-center justify-between mb-6">
               <h3 className="text-2xl font-bold flex items-center gap-2">
@@ -417,12 +417,11 @@ const GitHubDashboard = () => {
                 <span>More</span>
               </div>
               <div className="text-sm text-gray-500">
-                Last updated: {new Date().toLocaleTimeString()}
+                Updated: {currentTime.toLocaleTimeString()}
               </div>
             </div>
           </div>
 
-          {/* Language Stats */}
           <div className="bg-gradient-to-br from-gray-900/90 to-gray-800/90 backdrop-blur-xl border border-purple-500/20 rounded-2xl p-6 shadow-2xl">
             <h3 className="text-2xl font-bold mb-6 flex items-center gap-2">
               <Code className="w-6 h-6 text-purple-400" />
@@ -466,13 +465,72 @@ const GitHubDashboard = () => {
           </div>
         </div>
 
-        {/* Footer Info */}
+        <div className="bg-gradient-to-br from-gray-900/90 to-gray-800/90 backdrop-blur-xl border border-purple-500/20 rounded-2xl p-6 shadow-2xl mb-8">
+          <h3 className="text-2xl font-bold mb-6 flex items-center gap-2">
+            <Rocket className="w-6 h-6 text-cyan-400" />
+            <span className="bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
+              Recent Repositories
+            </span>
+          </h3>
+          
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {loading ? (
+              <div className="col-span-full text-center text-gray-400">Loading repositories...</div>
+            ) : repoData.length > 0 ? (
+              repoData.map((repo, index) => (
+                <a
+                  key={index}
+                  href={repo.html_url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group bg-gradient-to-br from-gray-800/80 to-gray-900/80 border border-gray-700/50 rounded-xl p-5 hover:border-purple-500/50 hover:scale-105 transition-all duration-300"
+                >
+                  <div className="flex items-start justify-between mb-3">
+                    <BookOpen className="w-5 h-5 text-purple-400" />
+                    <div className="flex items-center gap-2">
+                      {repo.stargazers_count > 0 && (
+                        <div className="flex items-center gap-1 text-xs text-yellow-400">
+                          <Star className="w-3 h-3" />
+                          {repo.stargazers_count}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                  
+                  <h4 className="font-bold text-white mb-2 group-hover:text-purple-400 transition-colors truncate">
+                    {repo.name}
+                  </h4>
+                  
+                  <p className="text-sm text-gray-400 mb-3 line-clamp-2">
+                    {repo.description || 'No description available'}
+                  </p>
+                  
+                  <div className="flex items-center gap-3 text-xs text-gray-500">
+                    {repo.language && (
+                      <div className="flex items-center gap-1">
+                        <div className="w-2 h-2 bg-purple-500 rounded-full" />
+                        {repo.language}
+                      </div>
+                    )}
+                    <div className="flex items-center gap-1">
+                      <Calendar className="w-3 h-3" />
+                      {new Date(repo.updated_at).toLocaleDateString()}
+                    </div>
+                  </div>
+                </a>
+              ))
+            ) : (
+              <div className="col-span-full text-center text-gray-400">No repositories found</div>
+            )}
+          </div>
+        </div>
+
         <div className="text-center text-sm text-gray-500">
           <div className="flex items-center justify-center gap-2 mb-2">
             <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
             <span>Real-time data powered by GitHub API</span>
           </div>
-          <p>Last synced: {new Date().toLocaleString()}</p>
+          <p>Last synced: {currentTime.toLocaleString()}</p>
         </div>
       </div>
 
