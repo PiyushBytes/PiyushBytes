@@ -23,10 +23,11 @@ const GitHubDashboard = () => {
     '  2f8e6b4 style: Modern UI components',
     '',
     '$ npm run dev',
-    '  ⚡️ Vite dev server running...',
-    '  ✓ Ready in 342ms',
+    '  Vite dev server running...',
+    '  Ready in 342ms',
     '',
     '$ echo "Building the future, one commit at a time"',
+    '  Building the future, one commit at a time',
   ];
 
   useEffect(() => {
@@ -287,11 +288,269 @@ const GitHubDashboard = () => {
                 <Terminal className="w-4 h-4 text-gray-600" />
               </div>
               <div className="p-4 font-mono text-sm h-64 overflow-y-auto">
-                {terminalLines.map((line, index) => (
-                  <div key={index} className={`${line.startsWith('$') ? 'text-green-400' : line.startsWith('  ✓') || line.startsWith('  ⚡') ? 'text-emerald-400' : line.startsWith('  On') || line.startsWith('  Your') ? 'text-blue-400' : 'text-gray-400'} mb-1`}>
-                    {line}
+                {terminalLines.map((line, index) => {
+                  const lineStr = String(line || '');
+                  const colorClass = lineStr.startsWith('
+            </div>
+
+            <div className="mt-6 pt-6 border-t border-gray-700/50">
+              <div className="grid grid-cols-2 md:flex gap-3">
+                {socialLinks.map((social, index) => (
+                  <a
+                    key={index}
+                    href={social.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`${social.bgColor} border border-gray-700/50 rounded-xl p-4 transition-all duration-300 hover:scale-105 hover:border-purple-500/50 group flex items-center gap-3`}
+                  >
+                    <div className={`bg-gradient-to-br ${social.color} p-2 rounded-lg group-hover:rotate-12 transition-transform`}>
+                      {social.icon}
+                    </div>
+                    <div className="flex-1">
+                      <div className="font-semibold text-white text-sm">{social.name}</div>
+                      <div className="text-xs text-gray-400">Connect</div>
+                    </div>
+                  </a>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+          {stats.map((stat, index) => (
+            <div 
+              key={index}
+              className={`group relative overflow-hidden bg-gradient-to-br from-gray-900/90 to-gray-800/90 backdrop-blur-xl border ${stat.highlight ? 'border-orange-500/50 shadow-orange-500/20' : 'border-purple-500/20'} rounded-2xl p-6 hover:scale-105 transition-all duration-500 cursor-pointer shadow-2xl`}
+            >
+              <div className={`absolute inset-0 bg-gradient-to-br ${stat.color} opacity-0 group-hover:opacity-10 transition-opacity duration-500`} />
+              
+              <div className="flex items-start justify-between mb-4">
+                <div className={`w-12 h-12 bg-gradient-to-br ${stat.color} rounded-xl flex items-center justify-center group-hover:rotate-12 group-hover:scale-110 transition-all duration-300`}>
+                  {stat.icon}
+                </div>
+                <div className={`bg-gradient-to-br ${stat.color} bg-opacity-20 rounded-lg p-1`}>
+                  {stat.subIcon}
+                </div>
+              </div>
+
+              <div className="text-4xl font-black mb-2 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
+                {stat.value}
+              </div>
+
+              <div className="text-gray-400 font-semibold mb-1">{stat.label}</div>
+              <div className="text-xs text-gray-500">{stat.detail}</div>
+
+              <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-transparent via-white/5 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000" />
+            </div>
+          ))}
+        </div>
+
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+          {liveStats.map((stat, index) => (
+            <div 
+              key={index}
+              className="bg-gradient-to-br from-gray-900/90 to-gray-800/90 backdrop-blur-xl border border-purple-500/20 rounded-xl p-5 hover:border-purple-500/50 transition-all group relative overflow-hidden"
+            >
+              <div className="flex items-center justify-between mb-3">
+                <div className={`p-2 rounded-lg bg-gradient-to-br ${stat.gradient} group-hover:scale-110 transition-transform`}>
+                  {stat.icon}
+                </div>
+                <div className="text-xs text-green-400 flex items-center gap-1">
+                  <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
+                  Live
+                </div>
+              </div>
+              <div className="text-3xl font-bold mb-1">{stat.value}</div>
+              <div className="text-sm text-gray-400 mb-1">{stat.label}</div>
+              <div className="text-xs text-gray-500">{stat.change}</div>
+            </div>
+          ))}
+        </div>
+
+        <div className="grid md:grid-cols-3 gap-6 mb-8">
+          <div className="md:col-span-2 bg-gradient-to-br from-gray-900/90 to-gray-800/90 backdrop-blur-xl border border-purple-500/20 rounded-2xl p-6 shadow-2xl">
+            <div className="flex items-center justify-between mb-6">
+              <h3 className="text-2xl font-bold flex items-center gap-2">
+                <Activity className="w-6 h-6 text-emerald-400" />
+                <span className="bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent">
+                  Contribution Activity
+                </span>
+              </h3>
+              <div className="flex items-center gap-2 text-sm">
+                <div className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse" />
+                <span className="text-gray-400">Live Updates</span>
+              </div>
+            </div>
+            
+            <div className="overflow-x-auto pb-4">
+              <div className="inline-flex gap-1">
+                {contributions.map((week, weekIndex) => (
+                  <div key={weekIndex} className="flex flex-col gap-1">
+                    {week.map((day, dayIndex) => (
+                      <div
+                        key={dayIndex}
+                        className={`w-3 h-3 rounded-sm ${getContributionColor(day)} transition-all cursor-pointer hover:scale-150 hover:ring-2 hover:ring-emerald-400`}
+                        title={`${day} contributions`}
+                      />
+                    ))}
                   </div>
                 ))}
+              </div>
+            </div>
+            
+            <div className="flex items-center justify-between mt-4">
+              <div className="flex items-center gap-3 text-xs text-gray-400">
+                <span>Less</span>
+                <div className="flex gap-1">
+                  {[0, 1, 2, 3, 4].map(level => (
+                    <div key={level} className={`w-4 h-4 rounded-sm ${getContributionColor(level).split(' ')[0]}`} />
+                  ))}
+                </div>
+                <span>More</span>
+              </div>
+              <div className="text-sm text-gray-500">
+                Updated: {currentTime.toLocaleTimeString()}
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-gradient-to-br from-gray-900/90 to-gray-800/90 backdrop-blur-xl border border-purple-500/20 rounded-2xl p-6 shadow-2xl">
+            <h3 className="text-2xl font-bold mb-6 flex items-center gap-2">
+              <Code className="w-6 h-6 text-purple-400" />
+              <span className="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+                Languages
+              </span>
+            </h3>
+            
+            <div className="space-y-5">
+              {techStack.map((tech, index) => (
+                <div key={index} className="group">
+                  <div className="flex items-center justify-between mb-2">
+                    <div className="flex items-center gap-2">
+                      <span className="text-xl">{tech.icon}</span>
+                      <span className="font-semibold text-gray-200">{tech.name}</span>
+                    </div>
+                    <span className="text-sm text-gray-400 font-mono">{tech.percentage.toFixed(2)}%</span>
+                  </div>
+                  <div className="relative h-3 bg-gray-800 rounded-full overflow-hidden">
+                    <div 
+                      className={`absolute top-0 left-0 h-full bg-gradient-to-r ${tech.gradient} transition-all duration-1000 ease-out group-hover:animate-pulse`}
+                      style={{ width: `${tech.percentage}%` }}
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="mt-6 pt-6 border-t border-gray-700/50">
+              <div className="flex items-center justify-between">
+                <span className="text-sm text-gray-400">Total Code Lines</span>
+                <span className="text-lg font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+                  2,500+
+                </span>
+              </div>
+              <div className="flex items-center gap-2 mt-2 text-xs text-gray-500">
+                <GitBranch className="w-3 h-3" />
+                <span>Across {loading ? '...' : commitData?.public_repos || '5'} repositories</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-gradient-to-br from-gray-900/90 to-gray-800/90 backdrop-blur-xl border border-purple-500/20 rounded-2xl p-6 shadow-2xl mb-8">
+          <h3 className="text-2xl font-bold mb-6 flex items-center gap-2">
+            <Rocket className="w-6 h-6 text-cyan-400" />
+            <span className="bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
+              Recent Repositories
+            </span>
+          </h3>
+          
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {loading ? (
+              <div className="col-span-full text-center text-gray-400">Loading repositories...</div>
+            ) : repoData.length > 0 ? (
+              repoData.map((repo, index) => (
+                <a
+                  key={index}
+                  href={repo.html_url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group bg-gradient-to-br from-gray-800/80 to-gray-900/80 border border-gray-700/50 rounded-xl p-5 hover:border-purple-500/50 hover:scale-105 transition-all duration-300"
+                >
+                  <div className="flex items-start justify-between mb-3">
+                    <BookOpen className="w-5 h-5 text-purple-400" />
+                    <div className="flex items-center gap-2">
+                      {repo.stargazers_count > 0 && (
+                        <div className="flex items-center gap-1 text-xs text-yellow-400">
+                          <Star className="w-3 h-3" />
+                          {repo.stargazers_count}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                  
+                  <h4 className="font-bold text-white mb-2 group-hover:text-purple-400 transition-colors truncate">
+                    {repo.name}
+                  </h4>
+                  
+                  <p className="text-sm text-gray-400 mb-3 line-clamp-2">
+                    {repo.description || 'No description available'}
+                  </p>
+                  
+                  <div className="flex items-center gap-3 text-xs text-gray-500">
+                    {repo.language && (
+                      <div className="flex items-center gap-1">
+                        <div className="w-2 h-2 bg-purple-500 rounded-full" />
+                        {repo.language}
+                      </div>
+                    )}
+                    <div className="flex items-center gap-1">
+                      <Calendar className="w-3 h-3" />
+                      {new Date(repo.updated_at).toLocaleDateString()}
+                    </div>
+                  </div>
+                </a>
+              ))
+            ) : (
+              <div className="col-span-full text-center text-gray-400">No repositories found</div>
+            )}
+          </div>
+        </div>
+
+        <div className="text-center text-sm text-gray-500">
+          <div className="flex items-center justify-center gap-2 mb-2">
+            <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
+            <span>Real-time data powered by GitHub API</span>
+          </div>
+          <p>Last synced: {currentTime.toLocaleString()}</p>
+        </div>
+      </div>
+
+      <style>{`
+        @keyframes matrix {
+          0% { transform: translateY(0); }
+          100% { transform: translateY(100px); }
+        }
+      `}</style>
+    </div>
+  );
+};
+
+export default GitHubDashboard;) 
+                    ? 'text-green-400' 
+                    : lineStr.startsWith('  Ready') || lineStr.startsWith('  Vite')
+                    ? 'text-emerald-400' 
+                    : lineStr.startsWith('  On') || lineStr.startsWith('  Your') || lineStr.startsWith('  Building')
+                    ? 'text-blue-400' 
+                    : 'text-gray-400';
+                  
+                  return (
+                    <div key={index} className={`${colorClass} mb-1`}>
+                      {lineStr}
+                    </div>
+                  );
+                })}
                 {currentCommand && (
                   <div className="text-green-400">
                     {currentCommand}<span className="animate-pulse">▊</span>
