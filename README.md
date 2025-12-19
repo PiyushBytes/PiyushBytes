@@ -1,7 +1,7 @@
 <h1 align="center">Hi 👋, I'm Piyush Dawn</h1>
 
 <p align="center">
-  <img src="https://readme-typing-svg.demolab.com/?lines=IT+Student+from+India;React+Learner;Aspiring+Full+Stack+Developer;Creative+Designer+%26+PR+Lead&center=true&width=520&height=45">
+  <img src="https://readme-typing-svg.demolab.com/?lines=IT+Student+from+India;React+Learner;Aspiring+Full+Stack+Developer;Creative+PR+%26+Design+Lead&center=true&width=520&height=45">
 </p>
 
 ---
@@ -9,25 +9,38 @@
 ## 🚀 About Me
 - 🎓 IT Student from India  
 - 💻 Currently learning **React.js & JavaScript**
-- 🎨 Creative Freelancer | PR & Branding
-- ⚡ Love building clean UI & real-world projects
-- 🧠 Exploring DSA, Web Development & Hackathons
+- 🎨 Creative Designer & PR Lead
+- ⚡ Interested in clean UI & real-world projects
+- 🧠 Exploring Web Development, DSA & Hackathons
+
+---
+
+## 🌐 Connect With Me
+<p align="left">
+  <a href="https://www.instagram.com/piyushdawn" target="_blank">
+    <img src="https://img.shields.io/badge/Instagram-E4405F?logo=instagram&logoColor=white"/>
+  </a>
+  <a href="https://www.linkedin.com/in/piyushdawn" target="_blank">
+    <img src="https://img.shields.io/badge/LinkedIn-0077B5?logo=linkedin&logoColor=white"/>
+  </a>
+  <a href="mailto:dawnpiyushofficial384@gmail.com">
+    <img src="https://img.shields.io/badge/Gmail-D14836?logo=gmail&logoColor=white"/>
+  </a>
+</p>
 
 ---
 
 ## 🛠️ Tech Stack
 <p align="left">
-  <img src="https://skillicons.dev/icons?i=html,css,js,react,git,github,figma,vscode" />
+  <img src="https://skillicons.dev/icons?i=html,css,js,react,git,github,figma,canva,vscode" />
 </p>
 
 ---
 
-## 📌 Featured Projects
+## 📌 Featured Project
 🔹 **React JS Learning Repository**  
 👉 https://github.com/PiyushBytes/REACT-JS  
-> My React learning journey with components, hooks & practice projects.
-
-🔹 **More projects coming soon 🚧**
+> My structured React learning journey covering components, hooks & practice apps.
 
 ---
 
@@ -49,14 +62,8 @@
 
 ---
 
-## 🌐 Connect With Me
-- 📷 Instagram: https://www.instagram.com/piyushdawn
-- 📧 Email: dawnpiyush384@gmail.com
-
----
-
 <p align="center">
   <img src="https://komarev.com/ghpvc/?username=PiyushBytes&label=Profile%20Views&color=0e75b6&style=flat" />
 </p>
 
-⭐ *Consistency beats talent when talent stops working.*
+⭐ *Consistency beats talent when talent stops showing up.*
